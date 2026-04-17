@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wheel Deals — Unlock Real Deals from Local Businesses</title>
-  <meta name="description" content="Discover local businesses near you and unlock exclusive deals. Download the Wheel Deals app — free on iOS and Android.">
+  <meta name="description" content="Discover local businesses near you and unlock exclusive deals. Download the Wheel Deals app — free to use.">
   <meta name="google-site-verification" content="j2HPC-GzTO_v0z-o1lCMI2iCBjLPLjrTRrE58w1bH68" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -119,6 +119,8 @@
       text-decoration: none;
       transition: transform 0.15s, box-shadow 0.15s;
       box-shadow: 0 4px 24px rgba(0,0,0,0.35);
+      cursor: pointer;
+      border: none;
     }
 
     .btn-app:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.45); }
@@ -295,6 +297,8 @@
       font-size: 15px;
       transition: background 0.2s, transform 0.15s;
       box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      cursor: pointer;
+      border: none;
     }
 
     .store-btn:hover { background: #1f2937; transform: translateY(-2px); }
@@ -338,7 +342,7 @@
     }
 
     .merchant-perks li::before {
-      content: '✓';
+      content: '\2713';
       color: var(--green);
       font-weight: 900;
       font-size: 16px;
@@ -406,6 +410,109 @@
       .steps { grid-template-columns: 1fr; }
       .deal-grid { grid-template-columns: repeat(2, 1fr); }
     }
+
+    /* ─── iOS ADD TO HOME SCREEN MODAL ─── */
+    .ios-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 9999;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0 16px 24px;
+      animation: fadeIn 0.2s ease;
+    }
+    .ios-modal-overlay.active { display: flex; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .ios-modal {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 28px 24px 24px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 16px 64px rgba(0,0,0,0.35);
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .ios-modal h3 {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--dark);
+      margin-bottom: 6px;
+    }
+
+    .ios-modal .ios-subtitle {
+      font-size: 14px;
+      color: var(--mid);
+      font-weight: 500;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .ios-step {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-align: left;
+      padding: 14px 0;
+      border-top: 1px solid rgba(0,0,0,0.07);
+    }
+
+    .ios-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--dark);
+      font-size: 14px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .ios-step-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--dark);
+      line-height: 1.45;
+    }
+
+    .ios-step-text .share-icon {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      vertical-align: middle;
+      margin: 0 3px;
+    }
+
+    .ios-modal-close {
+      margin-top: 20px;
+      background: var(--gold);
+      color: var(--dark);
+      border: none;
+      padding: 13px 32px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .ios-modal-close:hover { background: #e8961a; }
   </style>
 </head>
 <body>
@@ -417,15 +524,10 @@
   <p class="hero-sub">
     Browse local restaurants, salons, shops, and more. Pay a small fee to unlock an exclusive deal — then walk in and redeem it in person.
   </p>
-  <div class="hero-btns">
-    <a href="#" class="btn-app gold">
-      <span>🍎</span> Download on the App Store
-    </a>
-    <a href="#" class="btn-app">
-      <span>▶</span> Get it on Google Play
-    </a>
+  <div class="hero-btns" id="hero-btns">
+    <!-- Buttons injected by JS based on platform -->
   </div>
-  <p class="hero-note">Free to download &nbsp;·&nbsp; iOS &amp; Android</p>
+  <p class="hero-note" id="hero-note">Free to use</p>
 </section>
 
 <!-- HOW IT WORKS -->
@@ -497,7 +599,7 @@
       </div>
       <div class="why-card">
         <div class="icon">🆓</div>
-        <h3>Free to download</h3>
+        <h3>Free to use</h3>
         <p>The app is completely free. You only pay the small unlock fee when you choose a deal you want — no subscriptions, ever.</p>
       </div>
     </div>
@@ -508,22 +610,9 @@
 <section class="download-mid" id="download">
   <div class="container">
     <h2>Ready to unlock your first deal?</h2>
-    <p>Download the app — it's free. Your next favorite local spot is waiting.</p>
-    <div class="store-row">
-      <a href="#" class="store-btn">
-        <span class="s-icon">🍎</span>
-        <span class="s-text">
-          <span class="s-sub">Download on the</span>
-          App Store
-        </span>
-      </a>
-      <a href="#" class="store-btn">
-        <span class="s-icon">▶</span>
-        <span class="s-text">
-          <span class="s-sub">Get it on</span>
-          Google Play
-        </span>
-      </a>
+    <p>Get the app — it's free. Your next favorite local spot is waiting.</p>
+    <div class="store-row" id="store-row">
+      <!-- Buttons injected by JS based on platform -->
     </div>
   </div>
 </section>
@@ -544,7 +633,7 @@
           <li>Only 999 founding merchant spots available</li>
         </ul>
         <a href="https://wheel-deals-nine.vercel.app/merchant" class="btn-merchant" target="_blank" rel="noopener">
-          Become a Founding Merchant →
+          Become a Founding Merchant &rarr;
         </a>
       </div>
       <div class="merchant-img-col">
@@ -558,14 +647,118 @@
 <!-- FOOTER -->
 <footer>
   <strong>Wheel Deals Technology Inc.</strong><br>
-  © 2026 Wheel Deals Technology Inc. All rights reserved.<br>
+  &copy; 2026 Wheel Deals Technology Inc. All rights reserved.<br>
   <a href="https://wheel-deals-nine.vercel.app/merchant/terms">Terms &amp; Conditions</a>
-  &nbsp;·&nbsp;
+  &nbsp;&middot;&nbsp;
   <a href="https://wheel-deals-nine.vercel.app/discover">Browse on Web</a>
-  &nbsp;·&nbsp;
+  &nbsp;&middot;&nbsp;
   <a href="mailto:support@wheeldealsapp.com">support@wheeldealsapp.com</a><br>
   <span style="font-size: 12px; margin-top: 6px; display: block; opacity: 0.5;">wheeldealsapp.com</span>
 </footer>
+
+<!-- iOS ADD TO HOME SCREEN MODAL -->
+<div class="ios-modal-overlay" id="ios-modal">
+  <div class="ios-modal">
+    <h3>Install Wheel Deals</h3>
+    <div class="ios-subtitle">Add Wheel Deals to your home screen for the full app experience — instant access, no App Store needed.</div>
+    <div class="ios-step">
+      <div class="ios-step-num">1</div>
+      <div class="ios-step-text">
+        Tap the <strong>Share</strong> button
+        <svg class="share-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        at the bottom of Safari
+      </div>
+    </div>
+    <div class="ios-step">
+      <div class="ios-step-num">2</div>
+      <div class="ios-step-text">Scroll down and tap <strong>"Add to Home Screen"</strong></div>
+    </div>
+    <div class="ios-step">
+      <div class="ios-step-num">3</div>
+      <div class="ios-step-text">Tap <strong>"Add"</strong> — Wheel Deals will appear on your home screen like a regular app</div>
+    </div>
+    <button class="ios-modal-close" onclick="document.getElementById('ios-modal').classList.remove('active')">Got it</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  var PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.wheeldealsapp.app';
+  var APP_URL = 'https://wheel-deals-nine.vercel.app/discover';
+
+  // Detect iOS (iPhone, iPad, iPod)
+  var ua = navigator.userAgent || '';
+  var isIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+  // --- HERO BUTTONS ---
+  var heroBtns = document.getElementById('hero-btns');
+  var heroNote = document.getElementById('hero-note');
+
+  if (isIOS) {
+    // iOS: Show "Install App" button that opens the instruction modal
+    heroBtns.innerHTML =
+      '<button class="btn-app gold" onclick="document.getElementById(\'ios-modal\').classList.add(\'active\')">' +
+        '<span>📲</span> Install App' +
+      '</button>' +
+      '<a href="' + APP_URL + '" class="btn-app">' +
+        '<span>🌐</span> Browse Deals' +
+      '</a>';
+    heroNote.textContent = 'Free to use';
+  } else {
+    // Android / Desktop: Show Google Play button + Browse on Web
+    heroBtns.innerHTML =
+      '<a href="' + PLAY_STORE_URL + '" class="btn-app gold" target="_blank" rel="noopener">' +
+        '<span>▶</span> Get it on Google Play' +
+      '</a>' +
+      '<a href="' + APP_URL + '" class="btn-app">' +
+        '<span>🌐</span> Browse Deals' +
+      '</a>';
+    heroNote.textContent = 'Free to download';
+  }
+
+  // --- MID-PAGE CTA BUTTONS ---
+  var storeRow = document.getElementById('store-row');
+
+  if (isIOS) {
+    storeRow.innerHTML =
+      '<button class="store-btn" onclick="document.getElementById(\'ios-modal\').classList.add(\'active\')">' +
+        '<span class="s-icon">📲</span>' +
+        '<span class="s-text">' +
+          '<span class="s-sub">Add to your</span>' +
+          'Home Screen' +
+        '</span>' +
+      '</button>' +
+      '<a href="' + APP_URL + '" class="store-btn">' +
+        '<span class="s-icon">🌐</span>' +
+        '<span class="s-text">' +
+          '<span class="s-sub">Or just</span>' +
+          'Browse on Web' +
+        '</span>' +
+      '</a>';
+  } else {
+    storeRow.innerHTML =
+      '<a href="' + PLAY_STORE_URL + '" class="store-btn" target="_blank" rel="noopener">' +
+        '<span class="s-icon">▶</span>' +
+        '<span class="s-text">' +
+          '<span class="s-sub">Get it on</span>' +
+          'Google Play' +
+        '</span>' +
+      '</a>' +
+      '<a href="' + APP_URL + '" class="store-btn">' +
+        '<span class="s-icon">🌐</span>' +
+        '<span class="s-text">' +
+          '<span class="s-sub">Or just</span>' +
+          'Browse on Web' +
+        '</span>' +
+      '</a>';
+  }
+
+  // Close modal on overlay click
+  document.getElementById('ios-modal').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('active');
+  });
+})();
+</script>
 
 </body>
 </html>
