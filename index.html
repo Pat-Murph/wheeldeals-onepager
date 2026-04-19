@@ -695,13 +695,16 @@
   var heroNote = document.getElementById('hero-note');
 
   if (isIOS) {
-    // iOS: Show "Install App" button that opens the instruction modal
+    // iOS: Show "Install App" + "Browse Deals" + "Get it on Google Play" for trust
     heroBtns.innerHTML =
       '<button class="btn-app gold" onclick="document.getElementById(\'ios-modal\').classList.add(\'active\')">' +
         '<span>📲</span> Install App' +
       '</button>' +
       '<a href="' + APP_URL + '" class="btn-app">' +
         '<span>🌐</span> Browse Deals' +
+      '</a>' +
+      '<a href="' + PLAY_STORE_URL + '" class="btn-app" target="_blank" rel="noopener">' +
+        '<span>▶</span> Get it on Google Play' +
       '</a>';
     heroNote.textContent = 'Free to use';
   } else {
@@ -733,6 +736,13 @@
         '<span class="s-text">' +
           '<span class="s-sub">Or just</span>' +
           'Browse on Web' +
+        '</span>' +
+      '</a>' +
+      '<a href="' + PLAY_STORE_URL + '" class="store-btn" target="_blank" rel="noopener">' +
+        '<span class="s-icon">▶</span>' +
+        '<span class="s-text">' +
+          '<span class="s-sub">Also on</span>' +
+          'Google Play' +
         '</span>' +
       '</a>';
   } else {
