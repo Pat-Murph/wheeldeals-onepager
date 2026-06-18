@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wheel Deals — Unlock Real Deals from Local Businesses</title>
-  <meta name="description" content="Discover local businesses near you and unlock exclusive deals. Download the Wheel Deals app — free to use.">
+  <meta name="description" content="Discover local businesses near you and unlock exclusive deals. Download Wheel Deals on the App Store or Google Play — free to use.">
   <meta name="google-site-verification" content="j2HPC-GzTO_v0z-o1lCMI2iCBjLPLjrTRrE58w1bH68" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -656,26 +656,16 @@
   <span style="font-size: 12px; margin-top: 6px; display: block; opacity: 0.5;">wheeldealsapp.com</span>
 </footer>
 
-<!-- iOS ADD TO HOME SCREEN MODAL -->
+<!-- iOS MODAL (kept for legacy but no longer triggered) -->
 <div class="ios-modal-overlay" id="ios-modal">
   <div class="ios-modal">
-    <h3>Install Wheel Deals</h3>
-    <div class="ios-subtitle">Add Wheel Deals to your home screen for the full app experience — instant access, no App Store needed.</div>
+    <h3>Get Wheel Deals</h3>
+    <div class="ios-subtitle">Wheel Deals is now available on the App Store! Download it for free.</div>
     <div class="ios-step">
       <div class="ios-step-num">1</div>
       <div class="ios-step-text">
-        Tap the <strong>Share</strong> button
-        <svg class="share-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-        at the bottom of Safari
+        <a href="https://apps.apple.com/us/app/wheel-deals/id6776004051" target="_blank" rel="noopener" style="color:#1a73e8;font-weight:700;">Download on the App Store</a>
       </div>
-    </div>
-    <div class="ios-step">
-      <div class="ios-step-num">2</div>
-      <div class="ios-step-text">Scroll down and tap <strong>"Add to Home Screen"</strong></div>
-    </div>
-    <div class="ios-step">
-      <div class="ios-step-num">3</div>
-      <div class="ios-step-text">Tap <strong>"Add"</strong> — Wheel Deals will appear on your home screen like a regular app</div>
     </div>
     <button class="ios-modal-close" onclick="document.getElementById('ios-modal').classList.remove('active')">Got it</button>
   </div>
@@ -684,6 +674,7 @@
 <script>
 (function() {
   var PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.wheeldealsapp.app';
+  var APP_STORE_URL = 'https://apps.apple.com/us/app/wheel-deals/id6776004051';
   var APP_URL = 'https://wheel-deals-nine.vercel.app/discover';
 
   // Detect iOS (iPhone, iPad, iPod)
@@ -695,23 +686,23 @@
   var heroNote = document.getElementById('hero-note');
 
   if (isIOS) {
-    // iOS: Show "Install App" + "Browse Deals" + "Get it on Google Play" for trust
+    // iOS: Show App Store download + Browse Deals
     heroBtns.innerHTML =
-      '<button class="btn-app gold" onclick="document.getElementById(\'ios-modal\').classList.add(\'active\')">' +
-        '<span>📲</span> Install App' +
-      '</button>' +
+      '<a href="' + APP_STORE_URL + '" class="btn-app gold" target="_blank" rel="noopener">' +
+        '<span>&#63743;</span> Download on App Store' +
+      '</a>' +
       '<a href="' + APP_URL + '" class="btn-app">' +
         '<span>🌐</span> Browse Deals' +
-      '</a>' +
-      '<a href="' + PLAY_STORE_URL + '" class="btn-app" target="_blank" rel="noopener">' +
-        '<span>▶</span> Get it on Google Play' +
       '</a>';
-    heroNote.textContent = 'Free to use';
+    heroNote.textContent = 'Free to download';
   } else {
-    // Android / Desktop: Show Google Play button + Browse on Web
+    // Android / Desktop: Show both store buttons + Browse on Web
     heroBtns.innerHTML =
       '<a href="' + PLAY_STORE_URL + '" class="btn-app gold" target="_blank" rel="noopener">' +
         '<span>▶</span> Get it on Google Play' +
+      '</a>' +
+      '<a href="' + APP_STORE_URL + '" class="btn-app" target="_blank" rel="noopener">' +
+        '<span>&#63743;</span> Download on App Store' +
       '</a>' +
       '<a href="' + APP_URL + '" class="btn-app">' +
         '<span>🌐</span> Browse Deals' +
@@ -724,29 +715,29 @@
 
   if (isIOS) {
     storeRow.innerHTML =
-      '<button class="store-btn" onclick="document.getElementById(\'ios-modal\').classList.add(\'active\')">' +
-        '<span class="s-icon">📲</span>' +
+      '<a href="' + APP_STORE_URL + '" class="store-btn" target="_blank" rel="noopener">' +
+        '<span class="s-icon">&#63743;</span>' +
         '<span class="s-text">' +
-          '<span class="s-sub">Add to your</span>' +
-          'Home Screen' +
+          '<span class="s-sub">Download on the</span>' +
+          'App Store' +
         '</span>' +
-      '</button>' +
+      '</a>' +
       '<a href="' + APP_URL + '" class="store-btn">' +
         '<span class="s-icon">🌐</span>' +
         '<span class="s-text">' +
           '<span class="s-sub">Or just</span>' +
           'Browse on Web' +
         '</span>' +
-      '</a>' +
-      '<a href="' + PLAY_STORE_URL + '" class="store-btn" target="_blank" rel="noopener">' +
-        '<span class="s-icon">▶</span>' +
-        '<span class="s-text">' +
-          '<span class="s-sub">Also on</span>' +
-          'Google Play' +
-        '</span>' +
       '</a>';
   } else {
     storeRow.innerHTML =
+      '<a href="' + APP_STORE_URL + '" class="store-btn" target="_blank" rel="noopener">' +
+        '<span class="s-icon">&#63743;</span>' +
+        '<span class="s-text">' +
+          '<span class="s-sub">Download on the</span>' +
+          'App Store' +
+        '</span>' +
+      '</a>' +
       '<a href="' + PLAY_STORE_URL + '" class="store-btn" target="_blank" rel="noopener">' +
         '<span class="s-icon">▶</span>' +
         '<span class="s-text">' +
@@ -762,11 +753,6 @@
         '</span>' +
       '</a>';
   }
-
-  // Close modal on overlay click
-  document.getElementById('ios-modal').addEventListener('click', function(e) {
-    if (e.target === this) this.classList.remove('active');
-  });
 })();
 </script>
 
